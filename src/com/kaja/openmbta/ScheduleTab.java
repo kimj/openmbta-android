@@ -57,11 +57,6 @@ import android.widget.TabHost.OnTabChangeListener;
 import android.widget.TabHost.TabContentFactory;
 import android.widget.TabHost.TabSpec;
 
-import com.adwhirl.AdWhirlLayout;
-import com.adwhirl.AdWhirlManager;
-import com.adwhirl.adapters.AdWhirlAdapter;
-import com.adwhirl.AdWhirlLayout.AdWhirlInterface;
-import com.adwhirl.util.AdWhirlUtil;
 import com.google.android.maps.MapController;
 import com.google.android.maps.MapView;
 import com.google.android.maps.MyLocationOverlay;
@@ -73,7 +68,7 @@ import com.google.android.maps.OverlayItem;
 
 
 
-public class ScheduleTab extends MapActivity implements Runnable, AdWhirlInterface{
+public class ScheduleTab extends MapActivity implements Runnable{
 
 	  MapController mapController;
 	  KajaItemizedOverlay itemizedoverlay;
@@ -259,7 +254,6 @@ public class ScheduleTab extends MapActivity implements Runnable, AdWhirlInterfa
       					mapOverlays.add(itemizedoverlayFirstStops);
       				}
       				
-      				 initAdWhirl(); 
       				 // Now display the balloon over the closest stop
       				 if (MARKED_CLOSEST_STOP){
       					 		if (closestOverlayId == OVERLAY_DEFAULT){
@@ -1077,68 +1071,12 @@ public class ScheduleTab extends MapActivity implements Runnable, AdWhirlInterfa
 				}
 		  }
    
- public void initAdWhirl() {
-
-	   //setContentView(R.layout.tab_main_single);
-	   AdWhirlManager.setConfigExpireTimeout(1000 * 60 * 5);
-	
-	   AdWhirlLayout adWhirlLayout = (AdWhirlLayout)findViewById(R.id.adwhirl_layout);
-
-	   //TextView textView = new TextView(this);
-	   //RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
-	   int diWidth = 320;
-	   int diHeight = 52;
-	   int density = (int) getResources().getDisplayMetrics().density;
-	   try{
-		   
-	   adWhirlLayout.setAdWhirlInterface(this);
-	   adWhirlLayout.setMaxWidth((int)(diWidth * density));
-	   adWhirlLayout.setMaxHeight((int)(diHeight * density)); 
-	   
-	   //layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-	   //textView.setText("Below AdWhirlLayout");
-
-	  // LinearLayout layout = (LinearLayout)findViewById(R.id.layout_main);
-	 //RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout_main);
-	   
-	 /*  if (layout == null) {
-         Log.e("AdWhirl", "Layout is null!");
-         return;
-       }*/
-
-
-	   //layout.setGravity(Gravity.CENTER_HORIZONTAL);
-	   //layout.addView(adWhirlLayout, layoutParams);
-	  // layout.addView(textView, layoutParams);
-	   //layout.invalidate();
-	   }
-	   catch (Exception e){ 
-		   Log.e("ADWHIRL", "Error in code:" + e.toString());
-   		e.printStackTrace();
-	   }
-
-	   AdWhirlAdapter.setGoogleAdSenseAppName("OpenMBTA");
-	   AdWhirlAdapter.setGoogleAdSenseCompanyName("Kaja Software");
-	  // AdWhirlAdapter.setGoogleAdSenseChannel("xxxxxxx");
-	   //AdWhirlTargeting.setKeywords("business, commuters");
-
-     
-  }
-  
-public void adWhirlGeneric() {
-	    Log.e(AdWhirlUtil.ADWHIRL, "In adWhirlGeneric()");
-	  }
-
- 
  @Override
  public boolean onCreateOptionsMenu(Menu menu) {
        return true;
  }
  
  public boolean onPrepareOptionsMenu(Menu menu) {
-	
-	 
 	 menu.clear();
 	 MenuInflater inflater = getMenuInflater();
 	 if (isBookmarked()){
@@ -1150,9 +1088,7 @@ public void adWhirlGeneric() {
 	     inflater.inflate(R.menu.schedule_menu, menu);
 	 }   
 	     
-	     return true;
-	 
-	
+	     return true;	
  }
  
  @Override

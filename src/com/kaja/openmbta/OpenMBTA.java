@@ -2,54 +2,20 @@ package com.kaja.openmbta;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Set;
 
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.Display;
-import android.view.Gravity;
-import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
-import android.view.View.OnKeyListener;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Toast;
+import android.widget.TextView;
 
-
-
-import android.app.Dialog;
-import android.widget.AdapterView.OnItemClickListener;
-import android.app.AlertDialog;
-import android.view.LayoutInflater;
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.util.DisplayMetrics;
-import android.util.Log;
-import com.adwhirl.AdWhirlLayout;
-import com.adwhirl.AdWhirlLayout.AdWhirlInterface;
-import com.adwhirl.adapters.AdWhirlAdapter;
-import com.adwhirl.util.AdWhirlUtil;
-import com.adwhirl.AdWhirlManager;
-import com.adwhirl.AdWhirlTargeting;
-
- 
-
-public class OpenMBTA extends ListActivity implements AdWhirlInterface {
-    
- 
+public class OpenMBTA extends ListActivity {
 	  public static String MY_PREFS = "OpenMBTA";
 	  private MergeAdapter mAdapter=null;
 	
@@ -79,17 +45,16 @@ public class OpenMBTA extends ListActivity implements AdWhirlInterface {
     
     public void initActivity() {
     	try{
-    	
-        setContentView(R.layout.main);
-        bookmarkHash = getBookmarkHash();
+    		setContentView(R.layout.main);
+    		bookmarkHash = getBookmarkHash();
         
-        // Get references to UI widgets
-        myListView = (ListView)findViewById(android.R.id.list);
-        int resID = R.layout.row;
+    		// Get references to UI widgets
+    		myListView = (ListView)findViewById(android.R.id.list);
+    		int resID = R.layout.row;
         
-        mAdapter = new MergeAdapter();
+    		mAdapter = new MergeAdapter();
    
-       mAdapter.addView(buildLabel("Bookmarks"));
+    		mAdapter.addView(buildLabel("Bookmarks"));
         
         if (!bookmarkHash.isEmpty()){
         	// we have retrieved bookmarks.  need to display
@@ -128,80 +93,19 @@ public class OpenMBTA extends ListActivity implements AdWhirlInterface {
     		Log.e("Error", "Error in code:" + e.toString());
     		e.printStackTrace();
     	}
-    	
-    	initAdWhirl();
-    	
-    
     }
+    
     public void onResume() {
     	super.onResume();
-    	initActivity();
-    	
+    	initActivity();    	
     }
-    
 
-    
-    public void initAdWhirl() {
-
-  	   setContentView(R.layout.main);
-  	   AdWhirlManager.setConfigExpireTimeout(1000 * 60 * 5);
-  	 //  AdWhirlTargeting.setAge(23);
-  	  // AdWhirlTargeting.setGender(AdWhirlTargeting.Gender.MALE);
-  	  // AdWhirlTargeting.setKeywords("online games gaming");
-  	  // AdWhirlTargeting.setPostalCode("94123");
-  	  // AdWhirlTargeting.setTestMode(false);
-  	   AdWhirlLayout adWhirlLayout = (AdWhirlLayout)findViewById(R.id.adwhirl_layout);
-
-  	   TextView textView = new TextView(this);
-  	   RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
-  	   int diWidth = 320;
-  	   int diHeight = 52;
-  	   int density = (int) getResources().getDisplayMetrics().density;
-  	   try{
-  		   
-  	   adWhirlLayout.setAdWhirlInterface(this);
-  	   adWhirlLayout.setMaxWidth((int)(diWidth * density));
-  	   adWhirlLayout.setMaxHeight((int)(diHeight * density));
-  	   
-  	   layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
-  	   textView.setText("Below AdWhirlLayout");
-
-  	   //LinearLayout layout = (LinearLayout)findViewById(R.id.layout_main);
-  	   RelativeLayout layout = (RelativeLayout)findViewById(R.id.layout_main);
-  	 
-  	   if (layout == null) {
-           Log.e("AdWhirl", "Layout is null!");
-           return;
-         }
-
-
-  	   //layout.setGravity(Gravity.CENTER_HORIZONTAL);
-  	   
-  	   layout.addView(adWhirlLayout, layoutParams);
-  	   layout.addView(textView, layoutParams);
-  	   layout.invalidate();
-  	   }
-  	   catch (Exception e){
-  		   Log.e("ADWHIRL", "Error in code:" + e.toString());
-     		e.printStackTrace();
-  	   }
-  
-  	   AdWhirlAdapter.setGoogleAdSenseAppName("OpenMBTA");
-  	   AdWhirlAdapter.setGoogleAdSenseCompanyName("Kaja Software");
-  	  // AdWhirlAdapter.setGoogleAdSenseChannel("xxxxxxx");
-  	  // AdWhirlTargeting.setKeywords("My keywords");
- 
-       
-    }
-    
     public void onListItemClick(ListView parent, View v,
 			int _index, long id) {
     	Log.d("test", String.valueOf(_index));
 		int bmOffset = bmCount + 1; 
 
     		try { 
-            	
                 if (_index < bmOffset){
                 	// user has clicked on a bookmark.  Need to launch into schedule tab
                 	Intent i = new Intent(OpenMBTA.this, ScheduleTab.class); 
@@ -244,13 +148,8 @@ public class OpenMBTA extends ListActivity implements AdWhirlInterface {
             		Log.e("Error", "Error in code:" + e.toString());
             		e.printStackTrace();
             	}
-            	
      }
     
-    
-
-    
-   
     private void loadItems2(String title, String desc, String type)
     {	
     	transItem t3 = new transItem("", title, desc, type);
@@ -277,12 +176,9 @@ public class OpenMBTA extends ListActivity implements AdWhirlInterface {
 		
 		//TextView result = (TextView)findViewById(R.id.label);
 		result.setText("  " + labelText);
-		
-		
+			
 		return(result);
 	}
-	
-	
 	
     private void loadItems(){
     
@@ -299,14 +195,8 @@ public void loadOthers() {
 	loadItems2a("Tweets", "", "tweet");
 }
 
-public void adWhirlGeneric() {
-    Log.e(AdWhirlUtil.ADWHIRL, "In adWhirlGeneric()");
-  }
-
-
 public void loadPreferences(){
 	int mode = Activity.MODE_PRIVATE;
-	
 }
 
 private HashMap getBookmarkHash(){
@@ -322,11 +212,7 @@ private HashMap getBookmarkHash(){
 	return bmHash;
 }
 
-private void loadBookmarks()
-{	
-
-	
-	
+private void loadBookmarks(){
 	 Set set= bookmarkHash.entrySet (  ) ; 
      Iterator iter = set.iterator (  ) ; 
      bmCount=0;
@@ -350,10 +236,6 @@ private void loadBookmarks()
        i++; 
        bmCount++;
       }
-     
-	    
     bm_aa.notifyDataSetChanged();
-	
 }
-
 }

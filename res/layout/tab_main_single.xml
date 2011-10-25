@@ -97,13 +97,5 @@
     				android:apiKey="0POwIiC23X3f8E2R-ErIkPP0iJYGvRBuRlHc63Q"/>
     		</RelativeLayout>
       </FrameLayout>
-    		  <com.adwhirl.AdWhirlLayout
-  			      android:id="@+id/adwhirl_layout"
-  			      android:layout_width="320dp"
-       			  android:layout_height="52dp"
-        		  android:layout_alignParentBottom="true" 
-         		  android:gravity="bottom"  
-         		  android:layout_centerHorizontal="true"
-         />
     </RelativeLayout>
 </TabHost>
